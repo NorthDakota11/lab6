@@ -1,0 +1,7 @@
+language: cpp
+compiler: gcc
+script:
+  - cmake -S . -B _build -DBUILD_TESTS=ON
+  - cmake --build _build
+  - cmake --build _build --target test
+  - cmake --build _build --target package
