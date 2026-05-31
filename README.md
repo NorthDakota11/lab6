@@ -1,10 +1,23 @@
 # lab06
 
-Laboratory work VI: package generation with CPack.
+Лабораторная работа №6 посвящена созданию пакетов с помощью CPack.
 
-The project is based on the previous `print` CMake library and adds package generation.
+Проект основан на библиотеке `print` из предыдущих лабораторных работ. В этой работе добавлена конфигурация CPack и возможность собрать пакет из CMake-проекта.
 
-## Build
+## Состав проекта
+
+- `CMakeLists.txt` — CMake-сборка, версия проекта и подключение CPack.
+- `CPackConfig.cmake` — конфигурация CPack.
+- `include/print.hpp` — заголовочный файл библиотеки.
+- `sources/print.cpp` — реализация библиотеки.
+- `tests/test1.cpp` — простой тест.
+- `PackageDescription.txt` — описание пакета.
+- `CHANGES.md` — список изменений.
+- `LICENSE` — лицензия.
+- `.travis.yml` — сборка, тестирование и упаковка в CI.
+- `REPORT.md` — отчет по лабораторной работе.
+
+## Сборка и тестирование
 
 ```sh
 cmake -S . -B _build -DBUILD_TESTS=ON
@@ -12,31 +25,23 @@ cmake --build _build
 cmake --build _build --target test
 ```
 
-## Package
+## Сборка пакета
 
 ```sh
-cmake -S . -B _build -DCPACK_GENERATOR=TGZ
 cmake --build _build --target package
 ```
 
-You can also run CPack directly:
+Также можно вызвать CPack напрямую из каталога сборки:
 
 ```sh
 cd _build
 cpack -G TGZ
-cpack -G DEB
 ```
 
-## Version
+## Версия пакета
 
-The package version is `0.1.0.0`, as required by the lab06 tutorial.
+Версия пакета: `0.1.0.0`.
 
-## Files
+## Ссылка на репозиторий
 
-- `CMakeLists.txt` - CMake build with version variables and CPack hook.
-- `CPackConfig.cmake` - CPack configuration.
-- `include/print.hpp` - public header.
-- `sources/print.cpp` - library implementation.
-- `tests/test1.cpp` - simple test.
-- `PackageDescription.txt` - package description.
-- `CHANGES.md` - changelog.
+https://github.com/NorthDakota11/lab6
