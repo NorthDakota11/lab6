@@ -1,3 +1,6 @@
-set(CPACK_PACKAGE_NAME "print")
+set(CPACK_PACKAGE_NAME "solver")
 set(CPACK_PACKAGE_VERSION "0.1.0.0")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "solver application package")
+set(CPACK_GENERATOR "TGZ;DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "NorthDakota11")
 include(CPack)
