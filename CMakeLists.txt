@@ -1,27 +1,32 @@
 cmake_minimum_required(VERSION 3.4)
-project(print)
+project(solver_package)
 
-set(PRINT_VERSION_MAJOR 0)
-set(PRINT_VERSION_MINOR 1)
-set(PRINT_VERSION_PATCH 0)
-set(PRINT_VERSION_TWEAK 0)
-set(PRINT_VERSION ${PRINT_VERSION_MAJOR}.${PRINT_VERSION_MINOR}.${PRINT_VERSION_PATCH}.${PRINT_VERSION_TWEAK})
-set(PRINT_VERSION_STRING v${PRINT_VERSION})
+set(PACKAGE_VERSION_MAJOR 0)
+set(PACKAGE_VERSION_MINOR 1)
+set(PACKAGE_VERSION_PATCH 0)
+set(PACKAGE_VERSION_TWEAK 0)
+set(PACKAGE_VERSION_FULL ${PACKAGE_VERSION_MAJOR}.${PACKAGE_VERSION_MINOR}.${PACKAGE_VERSION_PATCH}.${PACKAGE_VERSION_TWEAK})
 
 option(BUILD_TESTS "Build tests" OFF)
 
-add_library(print STATIC sources/print.cpp)
-target_include_directories(print PUBLIC include)
+add_library(formatter STATIC formatter_lib/sources/formatter.cpp)
+target_include_directories(formatter PUBLIC formatter_lib/include)
 
-install(TARGETS print ARCHIVE DESTINATION lib)
-install(DIRECTORY include/ DESTINATION include)
+add_library(solver_lib STATIC solver_lib/calc.cc)
+target_include_directories(solver_lib PUBLIC solver_lib)
+
+add_executable(solver solver_application/app.cc)
+target_link_libraries(solver solver_lib formatter)
+
+install(TARGETS formatter solver_lib solver
+        ARCHIVE DESTINATION lib
+        RUNTIME DESTINATION bin)
+install(DIRECTORY formatter_lib/include/ DESTINATION include)
+install(DIRECTORY solver_lib/ DESTINATION include FILES_MATCHING PATTERN "*.hpp")
 
 if(BUILD_TESTS)
   enable_testing()
-  add_executable(check tests/test1.cpp)
-  target_include_directories(check PRIVATE include)
-  target_link_libraries(check print)
-  add_test(NAME check COMMAND check)
+  add_test(NAME solver_runs COMMAND solver)
 endif()
 
 include(CPackConfig.cmake)
